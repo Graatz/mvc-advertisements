@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Adly.Models.Advertisement>
+@{
+    ViewBag.Title = "Advertisements";
+}
+<div class="container">
+    <div class="container-fluid category-container">
+        <div class="row content-header">
+            <div class="col-md-6">
+                <h2 class="header">Kategorie</h2>
+                <p>Wybierz interesującą cię kategorię</p>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Nieruchomości</h3></div></div>
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Motoryzacja</h3></div></div>
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Praca</h3></div></div>
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Zwierzęta</h3></div></div>
+
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Usługi</h3></div></div>
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Elektronika</h3></div></div>
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Noclegi</h3></div></div>
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Sprzęt komputerowy</h3></div></div>
+
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Dom i ogród</h3></div></div>
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Sport i turystyka</h3></div></div>
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Społeczności</h3></div></div>
+            <div class="col-md-3"><div class="category-button"><span class="glyphicon glyphicon-briefcase"></span><h3>Nauka</h3></div></div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="content-header">
+            <div class="col-md-6">
+                <h2 class="header"> Najnowsze ogłoszenia</h2>
+                <p>Przeglądaj najnowsze ogłoszenia ze wszystkich kategorii</p>
+            </div>
+
+            <div class="col-md-6">
+                <input type="button" value="Dodaj ogłoszenie" class="btn btn-primary pull-right" onclick="location.href='@Url.Action("New", "Advertisement")'" />
+            </div>
+        </div>      
+    </div>
+
+    <div class="row content">
+        @foreach (var advertisement in Model)
+        {
+            <div class="col-md-3">
+                <a class="div-link" href="@Url.Action("Display", "Advertisement", new { id = advertisement.Id }, null )">
+                    <div class="thumbnail">
+                        <img src="@advertisement.Image">
+                        <div class="caption">
+                            <h3>@advertisement.Name</h3>
+                            @if (@advertisement.Description.Length > 150)
+                            {
+                                <p>@advertisement.Description.Remove(150)...</p>
+                            }
+                            else
+                            {
+                                <p>@advertisement.Description</p>
+                            }
+                        </div>
+                        <div class="thumbnail-details">
+                            <div class="data">@advertisement.Date</div>
+                            <div class="comment-signature"><span class="glyphicon glyphicon-eye-open"></span><p>Views (@advertisement.Views)</p></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>

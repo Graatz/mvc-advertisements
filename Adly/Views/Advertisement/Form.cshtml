@@ -1,0 +1,72 @@
+﻿@model Adly.ViewModels.AdvertisementViewModel
+@{
+    ViewBag.Title = "Advertisement Form";
+}
+
+<div class="container">
+
+    <div class="row content-header">
+        @if (Model.Advertisement.Id == 0)
+        {
+            <h2 class="header">Nowe ogłoszenie</h2>
+        }
+        else
+        {
+            <h2 class="header">Edycja ogłoszenia</h2>
+        }
+    </div>
+
+    <div class="row content">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Save", "Advertisement"))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Advertisement.Name)
+                    @Html.TextBoxFor(m => m.Advertisement.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Advertisement.Name)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Advertisement.Description)
+                    @Html.TextAreaFor(m => m.Advertisement.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Advertisement.Description)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Advertisement.CategoryId)
+                    @Html.DropDownListFor(m => m.Advertisement.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Advertisement.CategoryId)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Advertisement.Image)
+                    @Html.TextBoxFor(m => m.Advertisement.Image, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Advertisement.Image)
+                </div>
+
+                @Html.HiddenFor(m => m.Advertisement.Date);
+                @Html.HiddenFor(m => m.Advertisement.Id);
+
+                @Html.AntiForgeryToken();
+
+                if (Model.Advertisement.Id == 0)
+                {
+                    <button type="submit" class="btn btn-primary">Dodaj ogłoszenie</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Edytuj ogłoszenie</button>
+                }
+
+                <input type="button" value="Powrót" class="btn btn-primary" onclick="location.href='@Url.Action("Table", "Advertisement")'" />
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")    
+}
+
+

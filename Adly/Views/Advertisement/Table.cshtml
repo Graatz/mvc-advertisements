@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Adly.Models.Advertisement>
+@{
+    ViewBag.Title = "Advertisement table";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="content-header">
+            <div class="col-md-6">
+                <h2 class="header">Tabela ogłoszeń</h2>
+            </div>
+
+            <div class="col-md-6">
+                <input type="button" value="Dodaj ogłoszenie" class="btn btn-primary pull-right" onclick="location.href='@Url.Action("New", "Advertisement")'" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row content">
+        <table id="advertisements" class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Date)
+                    </th>
+                </tr>
+            </thead>
+
+            @foreach (var advertisement in Model)
+            {
+                <tr>
+                    <td>
+                        @advertisement.Id
+                    </td>
+
+                    <td>
+                        @Html.ActionLink(@advertisement.Name, "Edit", new { id = advertisement.Id }, null)
+                    </td>
+
+                    <td>
+                        @advertisement.Date.ToString()
+                    </td>
+
+                    <td>
+                        <button data-advertisement-id="@advertisement.Id" class="btn-link js-delete">Delete</button>
+                        
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+}
+
+@section scripts 
+{
+    <script>
+        $(document).ready(function () {
+            $("#advertisements").on("click", ".js-delete", function () {
+                var button = $(this);
+                if (confirm("Czy na pewno chcesz usunąć rekord?")) {
+                    $.ajax({
+                        url: "/api/advertisements/" + button.attr("data-advertisement-id"),
+                        method: "DELETE",
+                        success: function () {
+                            button.parents("tr").remove();
+                        }
+                    });
+                }              
+            });
+        });
+    </script>
+}
+

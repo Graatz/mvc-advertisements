@@ -1,0 +1,53 @@
+﻿@model Adly.Models.Category
+@{
+    ViewBag.Title = "Category Form";
+}
+
+<div class="container">
+
+    <div class="row content-header">
+        @if (Model.Id == 0)
+        {
+            <h2 class="header">Nowa kategoria</h2> 
+        }
+        else
+        {
+            <h2 class="header">Edycja kategorii</h2> 
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Save", "Category"))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Name)
+                </div>
+
+                @Html.HiddenFor(m => m.Id);
+
+                @Html.AntiForgeryToken();
+
+                if (Model.Id == 0)
+                {
+                    <button type="submit" class="btn btn-primary">Dodaj kategorię</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Edytuj kategorię</button>
+                }
+
+                <input type="button" value="Powrót" class="btn btn-primary" onclick="location.href='@Url.Action("Table", "Category")'" />
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

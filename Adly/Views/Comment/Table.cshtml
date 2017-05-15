@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Adly.Models.Comment>
+@{
+    ViewBag.Title = "Comment table";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="content-header">
+            <div class="col-md-6">
+                <h2 class="header">Tabela komentarzy</h2>
+            </div>
+
+            <div class="col-md-6">
+                <input type="button" value="Dodaj komentarz" class="btn btn-primary pull-right" onclick="location.href='@Url.Action("New", "Comment")'" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row content">
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.AdvertisementId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Content)
+                    </th>
+                </tr>
+            </thead>
+
+            @foreach (var comment in Model)
+            {
+                <tr>
+                    <td>
+                        @comment.Id
+                    </td>
+
+                    <td>
+                        @comment.AdvertisementId
+                    </td>
+
+                    <td>
+                        @Html.ActionLink(@comment.Content, "Edit", new { id = comment.Id }, null)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Usuń", "Remove", new { id = comment.Id }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+

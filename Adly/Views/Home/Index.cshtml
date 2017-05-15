@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron vertical-center">
+    <div class="container text-center">
+        <h1 >Aplikacja ogłoszeniowa</h1>
+        <p>Opublikuj swoje ogłoszenie za darmo i korzystaj z usług naszego serwisu!</p>
+        <input type="button" value="Dodaj nowe ogłoszenie" class="btn btn-info" onclick="location.href='@Url.Action("New", "Advertisement")'" />
+        <input type="button" value="Przeglądaj ogłoszenia" class="btn btn-info" onclick="location.href='@Url.Action("Index", "Advertisement")'" />
+    </div>
+
+    <div class="jumbotron-img"></div>
+</div>

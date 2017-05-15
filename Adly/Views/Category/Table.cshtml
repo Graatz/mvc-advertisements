@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Adly.Models.Category>
+@{
+    ViewBag.Title = "Category table";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="content-header">
+            <div class="col-md-6">
+                <h2 class="header">Tabela kategorii</h2>
+            </div>
+
+            <div class="col-md-6">
+                <input type="button" value="Dodaj kategorię" class="btn btn-primary pull-right" onclick="location.href='@Url.Action("New", "Category")'" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row content">
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Name)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>
+                        @category.Id
+                    </td>
+
+                    <td>
+                        @Html.ActionLink(@category.Name, "Edit", new { id = category.Id }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Usuń", "Remove", new { id = category.Id }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+

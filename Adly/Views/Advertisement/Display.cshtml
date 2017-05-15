@@ -1,0 +1,57 @@
+﻿@model Adly.ViewModels.DisplayViewModel
+@{
+    ViewBag.Title = "Display";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="content-header">
+            <div class="col-md-12">
+                <h2 class="header">@Model.Advertisement.Name</h2>
+                <small>@Model.Advertisement.Date</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>@Model.Advertisement.Description</p>
+
+            <div class="comment-section">
+                <div class="add-comment">
+                    <h3 class="header">Dodaj komentarz</h3>
+                    @using (Html.BeginForm("Save", "Comment", new { advertisementId = Model.Advertisement.Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            @Html.TextAreaFor(m => m.Comment.Content, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Comment.Content)
+                        </div>
+
+                        @Html.HiddenFor(m => m.Comment.Id);
+                        @Html.HiddenFor(m => m.Comment.AdvertisementId);
+                        @Html.AntiForgeryToken();
+
+                        <button type="submit" class="btn btn-primary">Skomentuj</button>
+                    }
+                </div>
+                
+                <div class="comments">
+                    <h3 class="header">Komentarze (@Model.Comments.Count())</h3>
+                    @if (Model.Comments.Count() == 0)
+                    {
+                        <p class="comment-content">Brak komentarzy</p>
+                    }
+                    else
+                    {
+                        foreach (var comment in Model.Comments)
+                        {
+                            <a href="#f">Annonymous</a>
+                            <small>@comment.Date</small>
+                            <p class="comment-content">@comment.Content</p>
+                        }
+                    }
+                </div>             
+            </div>
+        </div>
+    </div>
+</div>
